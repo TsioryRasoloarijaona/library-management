@@ -15,12 +15,7 @@ paths:
       description: The returned books are ordered by updated datetime.
       operationId: getBooks
       parameters:
-        - in: query
-          name: bookName
-          description: Filter return books by given name
-          required: false
-          schema:
-            type: string
+        - $ref: '#/components/parameters/queryPagination'
         - in: query
           name: releaseDateMin
           description: |
@@ -430,3 +425,12 @@ components:
       properties:
         author:
           $ref: '#/components/schemas/Author'
+
+  parameters:
+    queryPagination:
+        in: query
+        name: bookName
+        description: Filter return books by given name
+        required: false
+        schema:
+          type: string
