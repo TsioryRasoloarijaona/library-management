@@ -18,14 +18,16 @@ paths:
         - $ref: '#/components/parameters/queryPage'
         - $ref: '#/components/parameters/queryPageSize'
       responses:
-        200:
-          description: The list of filtered books
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/book'
+        '200':
+          $ref: '#/components/responses/200'
+        '400':
+          $ref: '#/components/responses/400'
+        '500':
+          $ref: '#/components/responses/500'
+
+
+
+
     put:
       tags:
         - Books
@@ -155,12 +157,13 @@ paths:
         - $ref: '#/components/parameters/PathPage'
         - $ref: '#/components/parameters/pathPageSize'
       responses:
-        200:
-          content:
-             application/json:
-               schema:
-                 items:
-                   $ref: '#/components/schemas/Author'
+        '200':
+          $ref: '#/components/responses/200'
+        '400':
+          $ref: '#/components/responses/400'
+        '500':
+          $ref: '#/components/responses/500'
+
 
   /authors/{aId}:
     delete:
@@ -337,8 +340,37 @@ paths:
 
 
 
+
+
 components:
   schemas:
+    Status:
+      type: object
+      properties:
+        code:
+          type: string
+          enum:
+            - '200'
+            - '400'
+            - '403'
+            - '500'
+        message:
+          type: string
+          enum:
+            - 'ok'
+            - 'not found'
+            - 'bad request'
+            - 'internal server error'
+
+    Body:
+      type: object
+      properties:
+        velue:
+          type: object
+          oneOf:
+            -
+
+
     Cupdatebook:
       type: object
       properties:
@@ -412,6 +444,9 @@ components:
         author:
           $ref: '#/components/schemas/Author'
 
+
+
+
   parameters:
     queryPage:
         in: query
@@ -449,6 +484,42 @@ components:
         type: integer
         required: false
         default: 50
+
+  responses:
+    error:
+      description: bad request
+    '200':
+      description: ok
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: '#/components/schemas/book'
+              - $ref: '#/components/schemas/Author'
+
+    '400':
+      description: internal server error
+      content:
+        $ref: '#/components/responses/error'
+
+    '403':
+      description: forbiden
+      content:
+        $ref: '#/components/responses/error'
+
+    '500':
+      description: internal server error
+      content:
+        $ref: '#/components/responses/error'
+
+
+
+
+
+
+
+
+
 
 
 
