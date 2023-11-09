@@ -108,7 +108,14 @@ paths:
       tags:
         - Authors
       parameters:
-        - $ref: '#/components/parameters/queryPaginationAuthor'
+        - name: authorName
+          in: query
+          description: |
+            Filter returned authors by given name. 
+            If not provided, then list is not filtered.
+          schema:
+            type: string
+          required: false
       responses:
         200:
           description: The list of filtered authors
@@ -446,15 +453,8 @@ components:
 
 
 
-    queryPaginationAuthor:
-        name: authorName
-        in: query
-        description: |
-          Filter returned authors by given name. 
-          If not provided, then list is not filtered.
-        schema:
-          type: string
-        required: false
+
+
 
 
 
