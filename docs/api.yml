@@ -94,22 +94,24 @@ paths:
            schema:
              items:
                $ref: '#/components/schemas/book'
+
+
+
       responses:
         '200':
           $ref: '#/components/schemas/book'
 
-  /author/import:
+  /authors/import:
     post:
       summary: import the list of author
       operationId: import
       tags:
         - Authors
       requestBody:
-        content:
-          application/json:
-            schema:
-              items:
-                $ref: '#/components/schemas/Author'
+          $ref:  '#/components/requestBodies/exel'
+
+
+
       responses:
         '200':
           $ref: '#/components/schemas/Author'
@@ -376,31 +378,7 @@ paths:
 
 components:
   schemas:
-    Status:
-      type: object
-      properties:
-        code:
-          type: string
-          enum:
-            - '200'
-            - '400'
-            - '403'
-            - '500'
-        message:
-          type: string
-          enum:
-            - 'ok'
-            - 'not found'
-            - 'bad request'
-            - 'internal server error'
 
-    Body:
-      type: object
-      properties:
-        velue:
-          type: object
-          oneOf:
-            -
 
 
     Cupdatebook:
@@ -476,6 +454,13 @@ components:
         author:
           $ref: '#/components/schemas/Author'
 
+    authorExel:
+      type: array
+      properties:
+        [id,name,age]
+
+
+
 
 
 
@@ -543,6 +528,44 @@ components:
       description: internal server error
       content:
         $ref: '#/components/responses/error'
+
+
+  requestBodies:
+     importAuthors:
+       description: json/exel
+       required: true
+       content:
+
+         appication/json:
+           schema:
+             items:
+               $ref: '#/components/schemas/Author'
+
+         application/vnd.ms-excel:
+           schema:
+             items:
+               $ref: '#/components/schemas/Author'
+
+     importBooks:
+         description: json/exel
+         required: true
+         content:
+
+           appication/json:
+             schema:
+               items:
+                 $ref: '#/components/schemas/book'
+
+           application/vnd.ms-excel:
+             schema:
+               items:
+                 $ref: '#/components/schemas/book'
+
+
+
+
+
+
 
 
 
