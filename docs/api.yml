@@ -15,39 +15,8 @@ paths:
       description: The returned books are ordered by updated datetime.
       operationId: getBooks
       parameters:
-        - $ref: '#/components/parameters/queryPagination'
-        - in: query
-          name: releaseDateMin
-          description: |
-            If  `releaseDateMax` is not provided, `releaseDateMin` is ignored.
-            `releaseDateMin` can not be after `releaseDateMax`.
-          schema:
-            type: string
-            format: date
-          required: false
-        - in: query
-          name: releaseDateMax
-          description: |
-            If  `releaseDateMin` is not provided, `releaseDateMax` is ignored.
-            `releaseDateMax` can not be after `releaseDateMin`.
-          schema:
-            type: string
-            format: date
-          required: false
-        - in : query
-          name: page
-          description: if `page` is not provided , the value will be 1 .
-          schema:
-            type: integer
-            required: false
-            default: 1
-        - in : query
-          name: pageSize
-          description: if `pageSize` is not provided , the value will be 50 .
-          schema:
-            type: integer
-            required: false
-            default: 50
+        - $ref: '#/components/parameters/queryPage'
+        - $ref: '#/components/parameters/queryPageSize'
       responses:
         200:
           description: The list of filtered books
@@ -139,14 +108,7 @@ paths:
       tags:
         - Authors
       parameters:
-        - name: authorName
-          in: query
-          description: |
-            Filter returned authors by given name. 
-            If not provided, then list is not filtered.
-          schema:
-            type: string
-          required: false
+        - $ref: '#/components/parameters/queryPaginationAuthor'
       responses:
         200:
           description: The list of filtered authors
@@ -177,6 +139,22 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Author'
+
+  /author/{page}/{pageSize}:
+    get:
+      summary: pagination
+      operationId: number of data
+      parameters:
+        - $ref: '#/components/parameters/PathPage'
+        - $ref: '#/components/parameters/pathPageSize'
+      responses:
+        200:
+          content:
+             application/json:
+               schema:
+                 items:
+                   $ref: '#/components/schemas/Author'
+
   /authors/{aId}:
     delete:
       summary: Delete an author
@@ -341,6 +319,7 @@ paths:
         - topic
       responses:
         200:
+          description: list of author and topic
           content:
             application/json:
               schema:
@@ -427,10 +406,56 @@ components:
           $ref: '#/components/schemas/Author'
 
   parameters:
-    queryPagination:
+    queryPage:
         in: query
-        name: bookName
-        description: Filter return books by given name
+        name: page
+        description: if `page` is not provided , the value will be 1 .
+        schema:
+          type: integer
+          required: false
+          default: 1
+
+
+    queryPageSize:
+        in: query
+        name: pageSize
+        description: if `pageSize` is not provided , the value will be 50 .
+        schema:
+          type: integer
+          required: false
+          default: 50
+
+    PathPage:
+      in: path
+      name: page
+      description: if `page` is not provided , the value will be 1 .
+      schema:
+        type: integer
         required: false
+        default: 1
+
+    pathPageSize:
+      in: path
+      name: pageSize
+      description: if `pageSize` is not provided , the value will be 50 .
+      schema:
+        type: integer
+        required: false
+        default: 50
+
+
+
+
+    queryPaginationAuthor:
+        name: authorName
+        in: query
+        description: |
+          Filter returned authors by given name. 
+          If not provided, then list is not filtered.
         schema:
           type: string
+        required: false
+
+
+
+
