@@ -82,6 +82,38 @@ paths:
                 items:
                   $ref: '#/components/schemas/book'
 
+  /books/import:
+    post:
+      summary: import the list of book
+      operationId: import
+      tags:
+        - Books
+      requestBody:
+        content:
+         application/json:
+           schema:
+             items:
+               $ref: '#/components/schemas/book'
+      responses:
+        '200':
+          $ref: '#/components/schemas/book'
+
+  /author/import:
+    post:
+      summary: import the list of author
+      operationId: import
+      tags:
+        - Authors
+      requestBody:
+        content:
+          application/json:
+            schema:
+              items:
+                $ref: '#/components/schemas/Author'
+      responses:
+        '200':
+          $ref: '#/components/schemas/Author'
+
   /books/authors:
     put:
       summary: associate more than one book and authors
