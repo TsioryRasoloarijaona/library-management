@@ -63,6 +63,8 @@ paths:
             type: string
             required: true
             default: available
+      security:
+        - OAuth2: [admin]
       responses:
         '200':
           $ref: '#/components/responses/200'
