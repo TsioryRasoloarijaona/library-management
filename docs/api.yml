@@ -406,6 +406,26 @@ paths:
                 items:
                   $ref: '#/components/schemas/authorsTopic'
 
+  /book/{customerId}:
+      get:
+        summary: get the acitvity of the visitors
+        operationId: get
+        tags:
+          - Books
+
+        parameters:
+          - in: path
+            name : customerId
+            schema:
+              type: string
+              required: true
+        responses:
+          200:
+            $ref: '#/components/responses/200'
+
+        security:
+          - OAuth2: [admin]
+
 
 
 
@@ -522,7 +542,14 @@ components:
         allOf:
           - $ref: '#/components/schemas/Author'
 
-
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: https://autorization.com
+          scopes:
+            admin : admin acces
 
 
 
