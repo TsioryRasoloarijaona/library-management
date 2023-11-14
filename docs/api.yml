@@ -50,6 +50,25 @@ paths:
                 items:
                   $ref: '#/components/schemas/book'
 
+  /book/{availability}:
+    get:
+      tags:
+        - Books
+      description: get all available book
+      operationId: get
+      parameters:
+        - in: path
+          name: availability
+          schema:
+            type: string
+            required: true
+            default: available
+      responses:
+        '200':
+          $ref: '#/components/responses/200'
+
+
+
   /book/{page}/{pageSize}:
     get:
       summary: get all book with the page specification
@@ -108,7 +127,7 @@ paths:
       tags:
         - Authors
       requestBody:
-          $ref:  '#/components/requestBodies/exel'
+          $ref:  '#/components/requestBodies/importBooks'
 
 
 
@@ -332,6 +351,23 @@ paths:
         200:
           description: done
 
+  /costumer:
+      post:
+       description: book reader
+       operationId: post
+       tags:
+         - visitor
+       requestBody:
+         content:
+           application/json:
+             schema:
+               items:
+                 $ref: '#/components/schemas/landBook'
+       responses:
+         '200':
+           $ref: '#/components/responses/200'
+
+
 
   /book/topic:
     put:
@@ -378,8 +414,29 @@ paths:
 
 components:
   schemas:
+    visitor :
+      type: object
+      properties:
+        visitorId:
+          type: integer
+        visitorName :
+          type: string
+        reference:
+          type: string
 
+    landBook:
+      type: object
+      properties:
+        bookId:
+          type: string
+        visitorId:
+          type: integer
 
+    bookVisitor:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/book'
+        - $ref: '#/components/schemas/visitor'
 
     Cupdatebook:
       type: object
@@ -388,9 +445,14 @@ components:
           type: string
         bookName:
           type: string
-
         pageNumbers:
           type: integer
+        availability:
+          type: string
+          enum:
+            - available
+            - not available
+
 
 
         releaseDate:
@@ -399,11 +461,11 @@ components:
     book:
       properties:
         author:
-
-
             $ref: '#/components/schemas/Author'
       allOf:
         - $ref: '#/components/schemas/Cupdatebook'
+
+
 
     updateBookAuthor:
       properties:
@@ -456,8 +518,10 @@ components:
 
     authorExel:
       type: array
-      properties:
-        [id,name,age]
+      items:
+        allOf:
+          - $ref: '#/components/schemas/Author'
+
 
 
 
@@ -513,6 +577,8 @@ components:
             oneOf:
               - $ref: '#/components/schemas/book'
               - $ref: '#/components/schemas/Author'
+              - $ref: '#/components/schemas/bookVisitor'
+
 
     '400':
       description: internal server error
@@ -536,15 +602,15 @@ components:
        required: true
        content:
 
+         application/vnd.ms-excel:
+           schema:
+             items:
+               $ref: '#/components/schemas/Author'
          appication/json:
            schema:
              items:
                $ref: '#/components/schemas/Author'
 
-         application/vnd.ms-excel:
-           schema:
-             items:
-               $ref: '#/components/schemas/Author'
 
      importBooks:
          description: json/exel
