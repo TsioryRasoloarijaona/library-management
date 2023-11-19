@@ -25,36 +25,38 @@ public class CrudBook implements BookOperations {
     @Override
     public List<Book> getAllBook() {
             List<Book> books = new ArrayList<>();
-            List<Author> author = new ArrayList<>() ;
-            List<String> topic = new ArrayList<>();
-            String sql = "select bookid,bookname,pagenumber, authorname , sex , topic from book inner join author on book.authorid = author.authorid;";
+
+
+            String sql = "select bookid,bookname,pagenumber, authorname , sex from book inner join author on book.authorid = author.authorid;";
             ResultSet resultSet;
-
-
 
             try (PreparedStatement statement = connection.prepareStatement(sql)){
                 resultSet = statement.executeQuery();
+
                 while (resultSet.next()){
-                    author.add(new Author(resultSet.getString("authorname"),
-                            resultSet.getString("sex")));
+                    Author author1 = new Author(resultSet.getString("authorname"),
+                            resultSet.getString("sex"));
 
                     books.add(new Book(resultSet.getInt("bookid"),
                             resultSet.getString("bookname"),
-                            resultSet.getInt("pagenumber")));
-
-
-
-
+                            resultSet.getInt("pagenumber"),
+                            author1));
                 }
-
-
 
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
 
-        return null;
+        return books;
     }
+
+
+
+
+
+
+
+
 
     @Override
     public List<Book> saveAllBook(List<Book> books) {

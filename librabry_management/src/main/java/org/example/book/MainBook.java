@@ -21,7 +21,7 @@ public class MainBook {
 
         crudBook.saveBook(book);
 
-
+        System.out.println(crudBook.getAllBook());
 
 
     }

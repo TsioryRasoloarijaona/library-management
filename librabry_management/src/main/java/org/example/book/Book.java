@@ -30,10 +30,11 @@ public class Book {
 
     }
 
-    public Book(int bookId, String bookName, int pageNumbers) {
+    public Book(int bookId, String bookName, int pageNumbers ,Author author) {
         this.bookId = bookId;
         this.bookName = bookName;
         this.pageNumbers = pageNumbers;
+        this.author = author;
 
 
     }
@@ -84,5 +85,17 @@ public class Book {
 
     public void setDateRealise(Date dateRealise) {
         this.dateRealise = dateRealise;
+    }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "bookId=" + bookId +
+                ", bookName='" + bookName + '\'' +
+                ", pageNumbers=" + pageNumbers +
+                ", dateRealise=" + dateRealise +
+                ", author=" + author +
+                ", topics=" + topics +
+                '}';
     }
 }
