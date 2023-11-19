@@ -11,7 +11,7 @@ import java.util.List;
 public class MainBook {
     public static void main(String[] args) throws SQLException {
         Connection connection = DBconnection.getConnection();
-        List<String> topic = new ArrayList<>();
+       List<String> topic = new ArrayList<>();
         topic.add("romance");
         topic.add("comedy");
         Author author = new Author(2,"rabezavana","M");
@@ -19,7 +19,7 @@ public class MainBook {
 
         CrudBook crudBook = new CrudBook(connection);
 
-        crudBook.saveBook(book);
+       /// crudBook.saveBook(book);
 
         System.out.println(crudBook.getAllBook());
 

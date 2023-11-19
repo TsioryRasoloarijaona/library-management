@@ -10,8 +10,8 @@ public class DBconnection {
     private DBconnection() throws SQLException {
         try {
             connection = DriverManager.getConnection("jdbc:postgresql://localhost/library_management",
-                    "prog_admin",
-                    "123456");
+                    System.getenv("DB_user"),
+                    System.getenv("postgres_password"));
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
