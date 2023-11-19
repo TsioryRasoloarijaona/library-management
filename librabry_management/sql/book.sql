@@ -1,4 +1,4 @@
-create table book(
+create table if not exists book(
     bookId serial primary key,
     bookName varchar (100),
     pageNumber int ,

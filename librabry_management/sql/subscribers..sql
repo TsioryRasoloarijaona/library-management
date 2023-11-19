@@ -1,4 +1,4 @@
-create table "user"(
+create table if not exists "user"(
     userId serial primary key ,
     userName varhar (200),
     usergender char(1),

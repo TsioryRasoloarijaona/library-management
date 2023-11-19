@@ -1,4 +1,4 @@
-create table author (
+create table if not exists author (
     authorId serial primary key,
     authorName varchar (200),
     sex char check (sex = 'M ' or sex = 'F')

@@ -3,11 +3,9 @@ package org.example.book;
 import org.example.author.AuthorCrud;
 import org.example.author.Author;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class CrudBook implements BookOperations {
@@ -25,9 +23,10 @@ public class CrudBook implements BookOperations {
     @Override
     public List<Book> getAllBook() {
             List<Book> books = new ArrayList<>();
+            List<String> topic = new ArrayList<>();
 
 
-            String sql = "select bookid,bookname,pagenumber, authorname , sex from book inner join author on book.authorid = author.authorid;";
+            String sql = "select bookid,bookname,pagenumber, authorname , sex ,topic from book inner join author on book.authorid = author.authorid;";
             ResultSet resultSet;
 
             try (PreparedStatement statement = connection.prepareStatement(sql)){
@@ -49,13 +48,6 @@ public class CrudBook implements BookOperations {
 
         return books;
     }
-
-
-
-
-
-
-
 
 
     @Override
@@ -108,3 +100,16 @@ public class CrudBook implements BookOperations {
         return toDelete;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
